@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — pre-token protocols, ranked by implied launch value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Token launch radar · sealed snapshot 2026-11-14</p>
+    <h1>Token Radar</h1>
+    <p class="lede">178 protocols that record no token, ranked by what a token would be worth if their record stayed as it is. The board covers the whole 40-protocol watchlist, then the early ones below the floor.</p>
+    <div class="stats" id="stats">
+      <div class="stat"><span class="stat-num" id="stat-scanned">758</span><span class="stat-label">protocols scanned</span></div>
+      <div class="stat"><span class="stat-num" id="stat-watchlist">40</span><span class="stat-label">on the watchlist</span></div>
+      <div class="stat"><span class="stat-num" id="stat-board">178</span><span class="stat-label">ranked on the board</span></div>
+      <div class="stat"><span class="stat-num" id="stat-live">24</span><span class="stat-label">live tokens set aside</span></div>
+    </div>
+  </header>
+
+  <section class="method" aria-label="How the radar values a protocol">
+    <h2>How a row is valued</h2>
+    <p>Implied value = TVL × the sector multiple × a growth multiplier × a maturity multiplier. The sector multiple is the median market-cap / TVL of the token-bearing protocols in the same category, read out of this snapshot — never a number written by hand. Growth is the protocol&rsquo;s seven-day TVL change, clamped to &minus;50…+100%. Maturity rewards time spent with no token: the longer a protocol has run without one, the closer its launch is priced. An implied value is this entry&rsquo;s own claim, never a prediction of whether or when a token launches.</p>
+  </section>
+
+  <nav class="tabs" aria-label="Views">
+    <button type="button" class="tab active" id="tab-board" aria-current="true">Board</button>
+    <button type="button" class="tab" id="tab-live">Live tokens</button>
+  </nav>
+
+  <section id="view-board" aria-label="Ranked board">
+    <div class="toolbar">
+      <label class="field"><span>Search</span><input id="q" type="search" placeholder="Protocol name or slug" autocomplete="off"></label>
+      <label class="field"><span>Category</span><select id="f-cat"><option value="">All categories</option></select></label>
+      <label class="field"><span>Chain</span><select id="f-chain"><option value="">All chains</option></select></label>
+      <label class="check"><input id="f-watch" type="checkbox"> Watchlist only</label>
+      <button type="button" class="btn" id="f-reset">Reset</button>
+    </div>
+    <p class="count" id="count"></p>
+    <div class="table-wrap">
+      <table id="board">
+        <thead>
+          <tr>
+            <th data-sort="rank" class="num sorted">Rank</th>
+            <th data-sort="name">Protocol</th>
+            <th data-sort="category">Category</th>
+            <th data-sort="chains">Chains</th>
+            <th data-sort="tvl_usd" class="num">TVL</th>
+            <th data-sort="change_7d" class="num">7d</th>
+            <th data-sort="age_days" class="num">Age</th>
+            <th data-sort="implied_value_usd" class="num">Implied value</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="hint">Select a row to open its detail view: the value breakdown and the farm plan.</p>
+  </section>
+
+  <section id="detail" class="detail" hidden aria-label="Protocol detail"></section>
+
+  <section id="view-live" hidden aria-label="Live tokens">
+    <p class="lede small">These protocols already trade. The market sets their value, so they are kept apart from the ranked board — and they are the comparables the board&rsquo;s sector multiples are read from.</p>
+    <div class="table-wrap">
+      <table id="live">
+        <thead>
+          <tr>
+            <th>Protocol</th>
+            <th>Category</th>
+            <th>Chains</th>
+            <th class="num">TVL</th>
+            <th class="num">Market cap</th>
+            <th class="num">7d</th>
+          </tr>
+        </thead>
+        <tbody id="live-rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <p>Data: sealed DefiLlama snapshot, fetched 2026-11-14. Model radar-2. This page renders with no network; all of its data is embedded in the page&rsquo;s own data file. Implied values are the entry&rsquo;s own claim.</p>
+  </footer>
+</div>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
